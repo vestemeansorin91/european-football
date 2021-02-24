@@ -2,7 +2,7 @@
   "name": "european-football",
   "version": "0.0.0",
   "scripts": {
-    "start": "ng serve --port 4411 --o"
+    "start": "ng serve --port 4411 --proxy-config ./proxy.conf.json --o"
   },
   "private": true,
   "dependencies": {
