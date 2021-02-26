@@ -1,3 +1,5 @@
+import { FavoritesComponent } from './favorites/favorites.component';
+import { CompetitionDetailsComponent } from './competition-details/competition-details.component';
 import { DashboardResolver } from './dashboard.resolver';
 import { NgModule } from '@angular/core';
 import { DashboardComponent } from './dashboard.component';
@@ -10,6 +12,14 @@ const routes: Routes = [
     resolve: {
       footballData: DashboardResolver
     }
+  },
+  {
+    path: 'competition-details/:id',
+    component: CompetitionDetailsComponent
+  },
+  {
+    path: 'favorites',
+    component: FavoritesComponent
   },
 ];
 

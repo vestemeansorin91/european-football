@@ -1,20 +1,12 @@
-import { FavoritesComponent } from './pages/favorites/favorites.component';
-import { CompetitionDetailsComponent } from './pages/competition-details/competition-details.component';
+import { FavoritesComponent } from './dashboard/favorites/favorites.component';
+import { CompetitionDetailsComponent } from './dashboard/competition-details/competition-details.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
   {
     path: 'dashboard',
-    loadChildren: () => import('./pages/dashboard/dashboard.module').then((m) => m.DashboardModule),
-  },
-  {
-    path: 'competition-details',
-    component: CompetitionDetailsComponent
-  },
-  {
-    path: 'favorites',
-    component: FavoritesComponent
+    loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
     path: '**',

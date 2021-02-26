@@ -1,0 +1,103 @@
+<div class="layout-padding">
+  <div class="layout-padding--header">
+    <h2>Competition details</h2>
+    <div
+      *ngIf="store.currentCompetition$ | async as competition"
+      class="header--info"
+    >
+      <table class="no-style">
+        <tr>
+          <td>Name</td>
+          <td>{{ competition.name }}</td>
+        </tr>
+        <tr>
+          <td>Area name</td>
+          <td>{{ competition.area.name }}</td>
+        </tr>
+        <tr>
+          <td>Last updated time</td>
+          <td>{{ competition.lastUpdated | date: "MM/dd/YYYY" }}</td>
+        </tr>
+
+        <ng-container *ngIf="store.currentSeason$ | async as season">
+          <tr>
+            <td>Start Date</td>
+            <td>{{ season.startDate }}</td>
+          </tr>
+          <tr>
+            <td>End Date</td>
+            <td>{{ season.endDate }}</td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Crest/Logo</th>
+        <th>Position</th>
+        <th class="center" colspan="4">Games</th>
+        <th>Points</th>
+        <th class="center" colspan="3">Goals</th>
+      </tr>
+
+      <tr>
+        <th colspan="3"></th>
+        <th>Played</th>
+        <th>Won</th>
+        <th>Draw</th>
+        <th>Lost</th>
+        <th></th>
+        <th>In favor</th>
+        <th>Against</th>
+        <th>Difference</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container
+        *ngIf="
+          (store.allStandings$ | async).length as standings;
+          else noStandingsRef
+        "
+      >
+        <ng-container *ngFor="let standing of store.allStandings$ | async">
+          <tr>
+            <td>{{ standing.group || "N/A" }}</td>
+            <td colspan="10"></td>
+          </tr>
+
+          <ng-container *ngIf="standing.table && standing.table.length">
+            <tr *ngFor="let sTable of standing.table; let i = index">
+              <td></td>
+              <td class="image">
+                <img [src]="sTable.team.crestUrl" alt="" />
+              </td>
+              <td>{{ sTable.position }}</td>
+              <td>{{ sTable.playedGames }}</td>
+              <td>{{ sTable.won }}</td>
+              <td>{{ sTable.draw }}</td>
+              <td>{{ sTable.lost }}</td>
+              <td>{{ sTable.points }}</td>
+              <td>{{ sTable.goalsFor }}</td>
+              <td>{{ sTable.goalsAgainst }}</td>
+              <td>{{ sTable.goalDifference }}</td>
+            </tr>
+          </ng-container>
+
+        </ng-container>
+      </ng-container>
+
+      <ng-template #noStandingsRef>
+        <tr>
+          <td colspan="6">
+            <span class="no-results">No standings found</span>
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</div>
