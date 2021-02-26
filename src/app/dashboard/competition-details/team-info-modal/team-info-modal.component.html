@@ -1,52 +1,81 @@
 <span *ngIf="teamInfo$ | async" class="not-found">Team Info not available</span>
 
 <table *ngIf="teamInfo$ | async as teamInfo">
+  <tbody>
+    <tr>
+      <td class="center" colspan="4">
+        <img [src]="teamInfo.crestUrl" alt="avatar" />
+      </td>
+    </tr>
 
-  <tr>
-    <td class="image center" colspan="2">
-      <img [src]="teamInfo.crestUrl" alt="avatar">
-    </td>
-  </tr>
+    <tr>
+      <td colspan="2">Area name</td>
+      <td colspan="2">{{ teamInfo.area.name }}</td>
+    </tr>
 
+    <tr>
+      <td colspan="2">Name</td>
+      <td colspan="2">{{ teamInfo.name }}</td>
+    </tr>
 
-  <tr>
-    <td>Area name</td>
-    <td>{{ teamInfo.area.name }}</td>
-  </tr>
+    <tr>
+      <td colspan="2">Address</td>
+      <td colspan="2">{{ teamInfo.address }}</td>
+    </tr>
 
-  <tr>
-    <td>Name</td>
-    <td>{{ teamInfo.name }}</td>
-  </tr>
+    <tr>
+      <td colspan="2">Phone</td>
+      <td colspan="2">
+        <a [attr.href]="'tel:' + teamInfo.phone">{{ teamInfo.phone }}</a>
+      </td>
+    </tr>
 
-  <tr>
-    <td>Address</td>
-    <td>{{ teamInfo.address }}</td>
-  </tr>
+    <tr>
+      <td colspan="2">Website link</td>
+      <td colspan="2">
+        <a [attr.href]="teamInfo.website" target="_blank">{{
+          teamInfo.website
+        }}</a>
+      </td>
+    </tr>
 
-  <tr>
-    <td>Phone</td>
-    <td>{{ teamInfo.phone }}</td>
-  </tr>
+    <tr>
+      <td colspan="2">E-mail link</td>
+      <td colspan="2">
+        <a [attr.href]="'mailto:' + teamInfo.email">{{ teamInfo.email }}</a>
+      </td>
+    </tr>
 
-  <tr>
-    <td>Website link</td>
-    <td>{{ teamInfo.website }}</td>
-  </tr>
+    <tr>
+      <td colspan="2">Founded year</td>
+      <td colspan="2">{{ teamInfo.founded }}</td>
+    </tr>
 
-  <tr>
-    <td>E-mail link</td>
-    <td>{{ teamInfo.email }}</td>
-  </tr>
+    <tr>
+      <td colspan="2">Venue Name</td>
+      <td colspan="2">{{ teamInfo.venue }}</td>
+    </tr>
+  </tbody>
 
-  <tr>
-    <td>Founded year</td>
-    <!-- TODO: SEARCH FOR FOUNDED YEAR -->
-    <td>{{ teamInfo.lastUpdated | date: 'YYYY' }}</td>
-  </tr>
+  <tbody>
+    <ng-container *ngIf="teamInfo.squad && teamInfo.squad.length">
+      <tr>
+        <td class="center" colspan="4">Players</td>
+      </tr>
 
-  <tr>
-    <td>Venue Name</td>
-    <td>{{ teamInfo.venue }}</td>
-  </tr>
+      <tr>
+        <td>Name</td>
+        <td>Position</td>
+        <td>Nationality</td>
+        <td>Age</td>
+      </tr>
+
+      <tr *ngFor="let player of teamInfo.squad">
+        <td>{{ player.name }}</td>
+        <td>{{ player.position }}</td>
+        <td>{{ player.nationality }}</td>
+        <td>{{ player.dateOfBirth | age }}</td>
+      </tr>
+    </ng-container>
+  </tbody>
 </table>

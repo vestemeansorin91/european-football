@@ -1,5 +1,5 @@
 import { TeamInfoModalComponent } from './team-info-modal/team-info-modal.component';
-import { IStanding, IStandingTable } from './../../shared/entities/interfaces/IStanding';
+import { IStandingTable } from './../../shared/entities/interfaces/IStanding';
 import { SharedStore } from './../../shared/shared.store';
 import { FootballDataService } from '../../shared/services/football-data.service';
 import { Component } from '@angular/core';
@@ -26,9 +26,20 @@ export class CompetitionDetailsComponent{
     })
   }
 
+  public favoriteToggle(event, table: IStandingTable): void {
+    event.stopPropagation();
+
+    if(table.hasOwnProperty('favorite')) {
+      table.favorite = !table.favorite;
+    } else {
+      table.favorite = true;
+    }
+  }
+
   public teamInfoClicked(teamId: string): void {
     this.dialog.open(TeamInfoModalComponent, {
       width: '60vw',
+      height: '80vh',
       data: {
         teamId
       }

@@ -21,9 +21,9 @@ export class TeamInfoModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: ModalData, public service: FootballDataService) {
       this.service.getTeamById(this.data.teamId).subscribe((response) => {
         this.teamInfo$.next(response);
-        this.hasTeamInfo = !!response;
+        this.hasTeamInfo = !response;
       }, err => {
-          this.hasTeamInfo = true;
+          this.hasTeamInfo = false;
       })
     }
 

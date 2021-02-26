@@ -16,6 +16,7 @@ export interface IStandingTable {
   goalsFor: number;
   goalsAgainst: number;
   goalDifference: number;
+  favorite: boolean;
 }
 
 export interface IStandingTableTeam {

@@ -20,6 +20,17 @@ table {
   tbody {
     tr {
       td {
+        a {
+          outline: none;
+          text-decoration: none;
+        }
+
+        i {
+          &.star {
+            color:#faee1c
+          }
+        }
+
         &.missing {
           color: darkgrey;
         }
