@@ -1,5 +1,10 @@
 .layout-padding {
   padding: 24px 48px;
+
+  &--header {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 

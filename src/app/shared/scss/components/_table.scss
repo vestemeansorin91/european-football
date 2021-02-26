@@ -1,18 +1,20 @@
 table {
   width: 100%;
-  border: 1px solid $main-color-020;
   border-radius: 8px;
+  border-collapse: collapse;
+
+
+  table, th, td {
+    border: 1px solid $main-color-020;
+  }
 
   thead {
-
     tr {
-
       &:last-of-type {
         border-bottom: 1px solid $main-color-020;
         padding-bottom: 16px;
       }
     }
-
   }
 
   tbody {
@@ -21,13 +23,37 @@ table {
         &.missing {
           color: darkgrey;
         }
+
+        &.image {
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+          }
+        }
+      }
+
+      &:hover {
+        background-color: $main-color-020;
+        cursor: pointer;
       }
     }
   }
+
+
 
   th,
   td {
     padding: 8px 16px;
     text-align: left;
+
+    &.center {
+      text-align: center;
+    }
+  }
+
+  // styles
+  &.no-style {
+    border: none;
   }
 }
