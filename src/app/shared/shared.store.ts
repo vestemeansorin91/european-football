@@ -9,5 +9,10 @@ export class SharedStore {
   currentCompetition$ = new BehaviorSubject<ICompetition>(null);
   allCompetitions$ = new BehaviorSubject<ICompetition[]>([]);
 
-  allStandings$ = new BehaviorSubject<IStanding[]>([]);
+  public allStandings$ = new BehaviorSubject<IStanding[]>([]);
+  public filteredStandings$ = this.allStandings$.asObservable();
+
+  public setStandings(standings: IStanding[]) {
+    this.allStandings$.next(standings);
+  }
 }

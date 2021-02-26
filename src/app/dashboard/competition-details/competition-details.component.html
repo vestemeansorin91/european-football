@@ -1,10 +1,7 @@
 <div class="layout-padding">
   <div class="layout-padding--header">
     <h2>Competition details</h2>
-    <div
-      *ngIf="store.currentCompetition$ | async as competition"
-      class="header--info"
-    >
+    <div *ngIf="store.currentCompetition$ | async as competition" class="header--info">
       <table class="no-style">
         <tbody>
           <tr>
@@ -38,10 +35,13 @@
   <table>
     <thead>
       <tr>
-        <th></th>
+        <th>
+          <i (click)="favoriteMasterToggle()" class="material-icons" [class.star-colored]="isFavoriteFilterOn$ | async">
+            {{ (isFavoriteFilterOn$ | async) ? "star" : "star_outline" }}</i>
+        </th>
         <th>Name</th>
         <th>Crest/Logo</th>
-        <th>Position</th>
+        <th class="flex">Position <i class="material-icons"></i></th>
         <th class="center" colspan="4">Games</th>
         <th>Points</th>
         <th class="center" colspan="3">Goals</th>
@@ -61,13 +61,8 @@
     </thead>
 
     <tbody>
-      <ng-container
-        *ngIf="
-          (store.allStandings$ | async).length as standings;
-          else noStandingsRef
-        "
-      >
-        <ng-container *ngFor="let standing of store.allStandings$ | async">
+      <ng-container *ngIf="filteredStandings.length; else noStandingsRef">
+        <ng-container *ngFor="let standing of filteredStandings">
           <tr>
             <td></td>
             <td>{{ standing.group || "N/A" }}</td>
@@ -75,26 +70,31 @@
           </tr>
 
           <ng-container *ngIf="standing.table && standing.table.length">
-            <tr *ngFor="let sTable of standing.table; let i = index" (click)="teamInfoClicked(sTable.team.id)">
-              <td>
-                <i (click)="favoriteToggle($event, sTable)" class="material-icons" [class.star]="sTable.favorite">{{ sTable.favorite ? 'star' : 'star_outline'}}</i>
-              </td>
-              <td></td>
-              <td class="image">
-                <img [src]="sTable.team.crestUrl" alt="" />
-              </td>
-              <td>{{ sTable.position }}</td>
-              <td>{{ sTable.playedGames }}</td>
-              <td>{{ sTable.won }}</td>
-              <td>{{ sTable.draw }}</td>
-              <td>{{ sTable.lost }}</td>
-              <td>{{ sTable.points }}</td>
-              <td>{{ sTable.goalsFor }}</td>
-              <td>{{ sTable.goalsAgainst }}</td>
-              <td>{{ sTable.goalDifference }}</td>
-            </tr>
-          </ng-container>
+            <ng-container *ngFor="let sTable of standing.table; let i = index"
+              (click)="teamInfoClicked(sTable.team.id)">
+              <tr *ngIf="!(isFavoriteFilterOn$ | async) || sTable.favorite">
+                <td>
+                  <i (click)="favoriteToggle($event, sTable)" class="material-icons"
+                    [class.star-colored]="sTable.favorite">
+                    {{ sTable.favorite ? "star" : "star_outline" }}</i>
+                </td>
+                <td></td>
+                <td class="image">
+                  <img [src]="sTable.team.crestUrl" alt="" />
+                </td>
+                <td>{{ sTable.position }}</td>
+                <td>{{ sTable.playedGames }}</td>
+                <td>{{ sTable.won }}</td>
+                <td>{{ sTable.draw }}</td>
+                <td>{{ sTable.lost }}</td>
+                <td>{{ sTable.points }}</td>
+                <td>{{ sTable.goalsFor }}</td>
+                <td>{{ sTable.goalsAgainst }}</td>
+                <td>{{ sTable.goalDifference }}</td>
+              </tr>
+            </ng-container>
 
+          </ng-container>
         </ng-container>
       </ng-container>
 
