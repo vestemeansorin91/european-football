@@ -1,3 +1,4 @@
+import { TeamInfoModalComponent } from './competition-details/team-info-modal/team-info-modal.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { CompetitionDetailsComponent } from './competition-details/competition-details.component';
 import { SharedModule } from '../shared/shared.module';
@@ -12,9 +13,11 @@ import { CommonModule } from '@angular/common';
   declarations: [
     DashboardComponent,
     CompetitionDetailsComponent,
-    FavoritesComponent
+    FavoritesComponent,
+    TeamInfoModalComponent
   ],
   imports: [CommonModule, DashboardRoutes, SharedModule],
-  providers: [DashboardResolver, FootballDataService]
+  providers: [DashboardResolver, FootballDataService],
+  entryComponents: [TeamInfoModalComponent]
 })
 export class DashboardModule { }

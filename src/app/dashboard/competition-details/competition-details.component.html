@@ -71,7 +71,7 @@
           </tr>
 
           <ng-container *ngIf="standing.table && standing.table.length">
-            <tr *ngFor="let sTable of standing.table; let i = index">
+            <tr *ngFor="let sTable of standing.table; let i = index" (click)="teamInfoClicked(sTable.team.id)">
               <td></td>
               <td class="image">
                 <img [src]="sTable.team.crestUrl" alt="" />

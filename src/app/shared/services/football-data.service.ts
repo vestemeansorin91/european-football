@@ -1,4 +1,4 @@
-import { ICompetitionResponse } from '../entities/interfaces/IApiResponses';
+import { ICompetitionResponse, IStandingResponse } from '../entities/interfaces/IApiResponses';
 import { environment } from './../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -17,10 +17,14 @@ export class FootballDataService {
     );
   }
 
-  public getAllStandings(id: string): Observable<any> {
-    return this.http.get<any>(
+  public getStandingsByCompetitionId(id: string): Observable<IStandingResponse> {
+    return this.http.get<IStandingResponse>(
       `${environment.api.url}/competitions/${id}/standings`,
       { params: this.params }
     );
+  }
+
+  public getTeamById(id: string): Observable<any> {
+    return this.http.get<any>(`${environment.api.url}/teams/${id}`, { params: this.params });
   }
 }

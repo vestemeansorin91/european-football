@@ -1,8 +1,11 @@
+import { TeamInfoModalComponent } from './team-info-modal/team-info-modal.component';
+import { IStanding, IStandingTable } from './../../shared/entities/interfaces/IStanding';
 import { SharedStore } from './../../shared/shared.store';
 import { FootballDataService } from '../../shared/services/football-data.service';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IStandingResponse } from '../../shared/entities/interfaces/IApiResponses';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-competition-details',
@@ -13,14 +16,24 @@ import { IStandingResponse } from '../../shared/entities/interfaces/IApiResponse
 export class CompetitionDetailsComponent{
   competitionId = null;
 
-  constructor(private route: ActivatedRoute, private footballDataService: FootballDataService, public store: SharedStore) {
+  constructor(private route: ActivatedRoute, private footballDataService: FootballDataService, private dialog: MatDialog, public store: SharedStore) {
     this.competitionId = this.route.snapshot.params.id;
 
-    this.footballDataService.getAllStandings(this.competitionId).subscribe((response: IStandingResponse) => {
+    this.footballDataService.getStandingsByCompetitionId(this.competitionId).subscribe((response: IStandingResponse) => {
       this.store.allStandings$.next(response.standings);
       this.store.currentCompetition$.next(response.competition);
       this.store.currentSeason$.next(response.season);
     })
+  }
+
+  public teamInfoClicked(teamId: string): void {
+    this.dialog.open(TeamInfoModalComponent, {
+      width: '60vw',
+      data: {
+        teamId
+      }
+    })
+
   }
 
 }
